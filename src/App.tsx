@@ -1,16 +1,14 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from './components/LanguageSwitcher';
+import { BrowserRouter as Router } from 'react-router-dom';
+import './index.css';
+import AppRoutes from './routes/Routes';
 
-const App: React.FC = () => {
-  const { t } = useTranslation();
-
+function App() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <LanguageSwitcher />
-      <h1 className="text-4xl font-bold mt-10">{t('welcome')}</h1>
-    </div>
+    
+    <Router>
+      <AppRoutes />
+    </Router>
   );
-};
+}
 
 export default App;
