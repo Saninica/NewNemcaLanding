@@ -6,9 +6,9 @@ import { ROUTES } from "../constants/routes";
 
 export default function Navbar() {
     const navigation = [
-        { name: 'About', href: '#' },
+        { name: 'About', href: ROUTES.ABOUTUS },
         { name: 'Pricing', href: ROUTES.PRICING },
-        { name: 'Projects', href: '#' },
+        { name: 'Projects', href: ROUTES.PROJECTS },
         { name: 'Contact', href: ROUTES.CONTACT },
     ]
 

@@ -2,9 +2,9 @@ import { ROUTES } from "../constants/routes"
 
 const navigation = {
     main: [
-      { name: 'About', href: '#' },
-      { name: 'Pricing', href: '#' },
-      { name: 'Projects', href: '#' },
+      { name: 'About', href: ROUTES.ABOUTUS },
+      { name: 'Pricing', href: ROUTES.PRICING },
+      { name: 'Projects', href: ROUTES.PROJECTS },
       { name: 'Contact', href: ROUTES.CONTACT },
     ],
     social: [
