@@ -24,7 +24,7 @@ export default function Navbar() {
                         <span className="sr-only">Nemca Tech</span>
                         <img
                             alt="Nemca Tech"
-                            src="https://nemcatech.com/img/icons/nemcaLogoTransparent.png"
+                            src="/nemcaLogo.png"
                             className="h-13 w-auto"
                         />
                     </a>
@@ -60,8 +60,8 @@ export default function Navbar() {
                         <a href="#" className="-m-1.5 p-1.5">
                             <span className="sr-only">Your Company</span>
                             <img
-                                alt=""
-                                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                                alt="Nemca Tech"
+                                src="/nemcaLogo.png"
                                 className="h-8 w-auto"
                             />
                         </a>

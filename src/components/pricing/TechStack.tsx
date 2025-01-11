@@ -4,7 +4,7 @@ import { DiDjango, DiRedis } from 'react-icons/di';
 import { IconType } from 'react-icons';
 
 export default function TechStack() {
-    interface Tech {
+      interface Tech {
         name: string;
         icon: IconType;
         description?: string;
@@ -38,9 +38,9 @@ export default function TechStack() {
       ];
       
     return (
-      <div className="bg-gray-900 py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <h2 className="mx-auto mb-4 max-w-4xl text-balance text-center text-5xl font-semibold tracking-tight text-white sm:text-6xl"> Our Tech Stack </h2>
+      <div className="bg-gray-900  sm:py-32">
+        <div className="px-6 lg:px-8">
+            <h2 className="mx-auto mb-8 max-w-4xl text-balance text-center text-5xl font-semibold tracking-tight text-white sm:text-6xl"> Our Tech Stack </h2>
           <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
             {techIcons.map((tech, index) => (
                 <div key={index} className="bg-white/5 p-8 ">

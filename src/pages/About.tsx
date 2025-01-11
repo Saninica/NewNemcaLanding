@@ -8,6 +8,8 @@ import {
 } from '@heroicons/react/24/solid'
 import OurMisson from '../components/about/OurMission'
 import { ROUTES } from '../constants/routes'
+import { Helmet } from "react-helmet";
+
 
 const values = [
     {
@@ -58,11 +60,23 @@ const team = [
 ]
 
 
+const metaTitle = "NemcaTech: About Us";
+const metaDescription = "Discover NemcaTech, a Northern Cyprus-based firm providing custom software, digital marketing, project management, and AI content creation tailored to your business.";
+const metaKeywords = "about NemcaTech, custom software development, Northern Cyprus tech company, business technology solutions, project management, AI based solutions";
+const headerTitle = "About Us";
+
+
 export default function AboutUs() {
 
     return (
         <div className="bg-gray-900">
-
+            
+            <Helmet> 
+            <meta name="title" content={metaTitle} />
+            <meta name="description" content={metaDescription} />
+            <meta name="keywords" content={metaKeywords} />
+            <title>{headerTitle}</title>
+            </Helmet>
 
             <main className="relative isolate">
                 {/* Background */}

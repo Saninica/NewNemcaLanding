@@ -1,15 +1,26 @@
 import HomeFeature from "../components/home/HomeFeature"
-import HomeCTA  from "../components/home/HomeCTA"
+import HomeCTA from "../components/home/HomeCTA"
 import HomeContact from "../components/home/HomeContact"
 import HomeHero from "../components/home/HomeHero"
+import { Helmet } from "react-helmet";
 
+
+const metaKeywords = "Northern Cyprus Nemca Tech, KKTC NemcaTech, nemcatech kktc, nemca tech, nemcatech, nemca, custom software, web development, mobile app development, project management, marketing solutions, CRM solutions, AI content generation, SEO services, Northern Cyprus, nemcatech, nemca tech, nemca, home nemcatech, Home nemcaTech, Nemca Tech Home";
+const headerTitle = "NemcaTech";
+const metaTitle = "NemcaTech: Customized Tech Solutions";
+const metaDescription = "NemcaTech offers custom web & mobile app development, project management, SEO optimization, and AI-driven content creation, delivering tailored tech solutions for businesses.";
 
 export default function Home() {
 
-
   return (
     <div>
-        
+      <Helmet>
+        <meta name="title" content={metaTitle} />
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content={metaKeywords} />
+        <title>{headerTitle}</title>
+      </Helmet>
+
       <div className="relative isolate pt-14">
         <div
           aria-hidden="true"
@@ -23,24 +34,24 @@ export default function Home() {
             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        
+
         <div className="py-24 sm:py-32 lg:pb-40">
-          
+
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
             <HomeHero />
-            
+
           </div>
 
           <HomeFeature />
 
-          <HomeCTA  />
-          
+          <HomeCTA />
+
           <HomeContact />
-          
+
         </div>
 
-        
+
 
         <div
           aria-hidden="true"
