@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CheckIcon } from "@heroicons/react/24/solid";
+import { ROUTES } from "../../constants/routes";
 
 
 export default function PricePlans () {
@@ -130,7 +131,7 @@ export default function PricePlans () {
                 <span className="text-sm/6 font-semibold text-gray-300">{tier.payment }  </span>
               </p>
               <a
-                href={tier.href}
+                href={ROUTES.CONTACT}
                 aria-describedby={tier.id}
                 className={classNames(
                   tier.id === selectedTier

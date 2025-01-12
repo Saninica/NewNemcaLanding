@@ -5,7 +5,7 @@ export default function ExperienceAndProjects() {
 
             <main>
 
-                <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8">
+                <div className="mx-auto max-w-2xl px-4  sm:px-6 sm:py-12 lg:max-w-7xl lg:px-8">
                     {/* Details section */}
                     <section aria-labelledby="details-heading">
                         <div className="flex flex-col items-center text-center">

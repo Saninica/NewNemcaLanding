@@ -39,7 +39,7 @@ export default function TechStack() {
       
     return (
       <div className="bg-gray-900  sm:py-32">
-        <div className="px-6 lg:px-8">
+        <div className="px-6 py-12 lg:px-8">
             <h2 className="mx-auto mb-8 max-w-4xl text-balance text-center text-5xl font-semibold tracking-tight text-white sm:text-6xl"> Our Tech Stack </h2>
           <div className="-mx-6 grid grid-cols-2 gap-0.5 overflow-hidden sm:mx-0 sm:rounded-2xl md:grid-cols-3">
             {techIcons.map((tech, index) => (

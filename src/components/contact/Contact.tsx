@@ -1,10 +1,83 @@
 import { BuildingOffice2Icon, EnvelopeIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react';
+import axios from 'axios';
+
 
 export default function Contact() {
 
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    message: string;
+  }
+
+
+  const [formData, setFormData] = useState<FormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [loading, setLoading] = useState(false);
+  const [result, setMessage] = useState("");
+
+  const sendEmail = async (formData: FormData) => {
+    try {
+      setLoading(true);
+      setMessage("");
+      const html = `<h4>Name: ${formData.firstName} ${formData.lastName}</h4> <br> Phone: ${formData.phoneNumber} <br> <p>Email: ${formData.email}</p> <br> <b>Message: ${formData.message}</b>`;
+      const subject = `Message from ${formData.firstName} ${formData.lastName}`;
+
+      const response = await axios.post('https://canilgu.dev/makyaj-api/resend/email/', {
+        html: html,
+        subject: subject
+      });
+
+      console.log('Email sent successfully:', response.data);
+      setMessage("Email sent successfully!");
+
+    } catch (err) {
+      console.error("Error occurred while sending email:", err);
+      setMessage("Error occurred while sending email!");
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const validateForm = () => {
+    let tempErrors: Partial<FormData> = {};
+    if (!formData.firstName) tempErrors.firstName = "Name is required";
+    if (!formData.email) {
+      tempErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      tempErrors.email = "Email is invalid";
+    }
+    if (!formData.message) tempErrors.message = "Message is required";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Form submitted:', formData);
+      sendEmail(formData);
+      setFormData({ firstName: '', lastName: '', email: '', phoneNumber: '', message: '' });
+    }
+  };
+
+
   return (
     <div className="relative isolate">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-7xl py-12 grid-cols-1 lg:grid-cols-2">
         <div className="relative px-6 pb-20 pt-24 sm:pt-32 lg:static lg:px-8 lg:py-48">
           <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
             <div className="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2">
@@ -46,6 +119,16 @@ export default function Contact() {
             <p className="mt-6 text-lg/8 text-gray-300">
               Get in touch with us by completing the below form for all our digital solutions!
             </p>
+
+
+            {Object.keys(errors).length > 0 && (
+              <ul className="text-white font-medium">
+                {Object.entries(errors).map(([key, error]) => (
+                  <li key={key}>{error}</li>
+                ))}
+              </ul>
+            )}
+
             <dl className="mt-10 space-y-4 text-base/7 text-gray-300">
               <div className="flex gap-x-4">
                 <dt className="flex-none">
@@ -58,7 +141,7 @@ export default function Contact() {
                   Kyrenia, CC 99350
                 </dd>
               </div>
-              
+
               <div className="flex gap-x-4">
                 <dt className="flex-none">
                   <span className="sr-only">Email</span>
@@ -73,7 +156,7 @@ export default function Contact() {
             </dl>
           </div>
         </div>
-        <form action="#" method="POST" className="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48">
+        <form onSubmit={handleSubmit} className="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48">
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
@@ -82,9 +165,11 @@ export default function Contact() {
                 </label>
                 <div className="mt-2.5">
                   <input
-                    id="first-name"
-                    name="first-name"
+                    id="firstName"
+                    name="firstName"
                     type="text"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     autoComplete="given-name"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
@@ -96,9 +181,11 @@ export default function Contact() {
                 </label>
                 <div className="mt-2.5">
                   <input
-                    id="last-name"
-                    name="last-name"
+                    id="lastName"
+                    name="lastName"
                     type="text"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     autoComplete="family-name"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
@@ -113,6 +200,8 @@ export default function Contact() {
                     id="email"
                     name="email"
                     type="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     autoComplete="email"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
@@ -124,9 +213,11 @@ export default function Contact() {
                 </label>
                 <div className="mt-2.5">
                   <input
-                    id="phone-number"
-                    name="phone-number"
+                    id="phoneNumber"
+                    name="phoneNumber"
                     type="tel"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
                     autoComplete="tel"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
@@ -140,9 +231,10 @@ export default function Contact() {
                   <textarea
                     id="message"
                     name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={4}
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
-                    defaultValue={''}
                   />
                 </div>
               </div>
@@ -150,11 +242,16 @@ export default function Contact() {
             <div className="mt-8 flex justify-end">
               <button
                 type="submit"
-                className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                disabled={loading}
+                className={`rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm ${loading ? 'cursor-not-allowed opacity-50' : 'hover:bg-indigo-400'
+                  }`}
               >
-                Send
+                {loading ? 'Sending...' : 'Send'}
               </button>
             </div>
+
+            {result !== "" ? <b className='text-white font-medium'> {result} </b> : null}
+
           </div>
         </form>
       </div>

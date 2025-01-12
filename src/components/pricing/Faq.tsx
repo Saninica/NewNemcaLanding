@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     question:  'Can I share my project idea with you from scratch, including all processes?',
-    name: 'Yes, Nemca Tech works with clients from the very beginning stages, assisting in refining your ideas and guiding through all processes.'
+    answer: 'Yes, Nemca Tech works with clients from the very beginning stages, assisting in refining your ideas and guiding through all processes.'
   },
   {
     question: 'Can I make changes to the project scope once it has started?',

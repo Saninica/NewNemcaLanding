@@ -1,3 +1,5 @@
+import { ROUTES } from "../../constants/routes";
+
 export default function HomeHero() {
 
     return (
@@ -11,12 +13,12 @@ export default function HomeHero() {
                       </p>
                       <div className="mt-10 flex items-center justify-center gap-x-6">
                         <a
-                          href="#"
+                          href={ROUTES.PROJECTS}
                           className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
                         >
                           Explore
                         </a>
-                        <a href="#" className="text-sm/6 font-semibold text-white">
+                        <a href={ROUTES.ABOUTUS} className="text-sm/6 font-semibold text-white">
                           Learn more <span aria-hidden="true">→</span>
                         </a>
                       </div>

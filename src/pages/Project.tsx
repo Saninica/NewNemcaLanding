@@ -22,13 +22,15 @@ export default function ProjectPage() {
 
             <ProjectsHero />
 
+            <ExperienceAndProjects />
+
             <ProjectFeatures />
 
             <HowToStart />
 
             <ProjectSolution />
 
-            <ExperienceAndProjects />
+           
         </>
     );
 }
