@@ -1,5 +1,77 @@
+import axios from "axios";
+import { useState } from "react";
 
 export default function HomeContact() {
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    message: string;
+  }
+
+
+  const [formData, setFormData] = useState<FormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [loading, setLoading] = useState(false);
+  const [result, setMessage] = useState("");
+
+  const sendEmail = async (formData: FormData) => {
+    try {
+      setLoading(true);
+      setMessage("");
+      const html = `<h4>Name: ${formData.firstName} ${formData.lastName}</h4> <br> Phone: ${formData.phoneNumber} <br> <p>Email: ${formData.email}</p> <br> <b>Message: ${formData.message}</b>`;
+      const subject = `Message from ${formData.firstName} ${formData.lastName}`;
+
+      const response = await axios.post('https://canilgu.dev/makyaj-api/resend/email/', {
+        html: html,
+        subject: subject
+      });
+
+      console.log('Email sent successfully:', response.data);
+      setMessage("Email sent successfully!");
+
+    } catch (err) {
+      console.error("Error occurred while sending email:", err);
+      setMessage("Error occurred while sending email!");
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const validateContactForm = () => {
+    let tempErrors: Partial<FormData> = {};
+    if (!formData.firstName) tempErrors.firstName = "Name is required";
+    if (!formData.email) {
+      tempErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      tempErrors.email = "Email is invalid";
+    }
+    if (!formData.message) tempErrors.message = "Message is required";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (validateContactForm()) {
+      console.log('Form submitted:', formData);
+      sendEmail(formData);
+      setFormData({ firstName: '', lastName: '', email: '', phoneNumber: '', message: '' });
+    }
+  };
+
+
   return (
     <div className="relative isolate">
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
@@ -42,12 +114,20 @@ export default function HomeContact() {
             </div>
             <h2 className="text-pretty text-4xl font-semibold tracking-tight text-white sm:text-5xl">Contact</h2>
             <p className="mt-6 text-lg/8 text-gray-300">
-            Get in touch with us using the form on the right to explore all our digital solutions!
+              Get in touch with us using the form on the right to explore all our digital solutions!
             </p>
-            
+
+            {Object.keys(errors).length > 0 && (
+              <ul className="text-white font-medium">
+                {Object.entries(errors).map(([key, error]) => (
+                  <li key={key}>{error}</li>
+                ))}
+              </ul>
+            )}
+
           </div>
         </div>
-        <form action="#" method="POST" className="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48">
+        <form onSubmit={handleSubmit} className="px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48">
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
@@ -56,8 +136,10 @@ export default function HomeContact() {
                 </label>
                 <div className="mt-2.5">
                   <input
-                    id="first-name"
-                    name="first-name"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
                     type="text"
                     autoComplete="given-name"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
@@ -70,8 +152,10 @@ export default function HomeContact() {
                 </label>
                 <div className="mt-2.5">
                   <input
-                    id="last-name"
-                    name="last-name"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
                     type="text"
                     autoComplete="family-name"
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
@@ -88,11 +172,13 @@ export default function HomeContact() {
                     name="email"
                     type="email"
                     autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
                   />
                 </div>
               </div>
-            
+
               <div className="sm:col-span-2">
                 <label htmlFor="message" className="block text-sm/6 font-semibold text-white">
                   Message
@@ -101,9 +187,10 @@ export default function HomeContact() {
                   <textarea
                     id="message"
                     name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={4}
                     className="block w-full rounded-md bg-white/5 px-3.5 py-2 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500"
-                    defaultValue={''}
                   />
                 </div>
               </div>
@@ -111,10 +198,14 @@ export default function HomeContact() {
             <div className="mt-8 flex justify-end">
               <button
                 type="submit"
-                className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                disabled={loading}
+                className={`rounded-md bg-indigo-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm ${loading ? 'cursor-not-allowed opacity-50' : 'hover:bg-indigo-400'
+                  }`}
               >
-                Send 
+                {loading ? 'Sending...' : 'Send'}
               </button>
+
+              {result !== "" ? <b className='text-white font-medium'> {result} </b> : null}
             </div>
           </div>
         </form>

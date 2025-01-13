@@ -52,7 +52,7 @@ export default function Contact() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const validateForm = () => {
+  const validateContactForm = () => {
     let tempErrors: Partial<FormData> = {};
     if (!formData.firstName) tempErrors.firstName = "Name is required";
     if (!formData.email) {
@@ -67,7 +67,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (validateContactForm()) {
       console.log('Form submitted:', formData);
       sendEmail(formData);
       setFormData({ firstName: '', lastName: '', email: '', phoneNumber: '', message: '' });
