@@ -19,6 +19,19 @@ export default function Home() {
         <meta name="description" content={metaDescription} />
         <meta name="keywords" content={metaKeywords} />
         <title>{headerTitle}</title>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-16917800526"
+        />
+        {/* Initialize the dataLayer and gtag config */}
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-16917800526');
+          `}
+        </script>
       </Helmet>
 
       <div className="relative isolate pt-14">

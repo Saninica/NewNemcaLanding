@@ -78,7 +78,7 @@ export default function ProjectsHero() {
                 clipPath="url(#2ade4387-9c63-4fc4-b754-10e687a0d332)"
                 transform="translate(24 24)"
               >
-                <img alt="" src="https://tailwindui.com/plus/img/component-images/mobile-app-screenshot.png" />
+                <img alt="" src="https://tailwindcss.com/plus-assets/img/component-images/bento-03-mobile-friendly.png" />
               </foreignObject>
             </svg>
           </div>
