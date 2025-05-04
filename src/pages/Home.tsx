@@ -3,6 +3,8 @@ import HomeCTA from "../components/home/HomeCTA"
 import HomeContact from "../components/home/HomeContact"
 import HomeHero from "../components/home/HomeHero"
 import { Helmet } from "react-helmet";
+import { useEffect } from "react";
+import { useHomeStore } from "../store/useHomeStore";
 
 
 const metaKeywords = "Northern Cyprus Nemca Tech, KKTC NemcaTech, nemcatech kktc, nemca tech, nemcatech, nemca, custom software, web development, mobile app development, project management, marketing solutions, CRM solutions, AI content generation, SEO services, Northern Cyprus, nemcatech, nemca tech, nemca, home nemcatech, Home nemcaTech, Nemca Tech Home";
@@ -11,6 +13,16 @@ const metaTitle = "NemcaTech: Customized Tech Solutions";
 const metaDescription = "NemcaTech offers custom web & mobile app development, project management, SEO optimization, and AI-driven content creation, delivering tailored tech solutions for businesses.";
 
 export default function Home() {
+
+  const { pageContents, getPageContents } = useHomeStore();
+  const isLoading = !pageContents;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getPageContents(1, "TR");
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -36,16 +48,23 @@ export default function Home() {
         </div>
 
         <div className="py-24 sm:py-32 lg:pb-40">
+          {isLoading ? (
+            <div className="flex items-center justify-center h-96">
+              <div className="w-12 h-12 border-4 border-t-[4px] border-gray-200 rounded-full animate-spin" />
+            </div>
+          ) :
+            <>
+              <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <HomeHero data={pageContents.contents!} />
 
-            <HomeHero />
+              </div>
 
-          </div>
+              <HomeFeature data={pageContents.contents!} />
 
-          <HomeFeature />
-
-          <HomeCTA />
+              <HomeCTA data={pageContents.contents!} />
+            </>
+          }
 
           <HomeContact />
 

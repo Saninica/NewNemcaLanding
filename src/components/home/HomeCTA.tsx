@@ -1,7 +1,10 @@
 import { COLOR } from "../../constants/colors";
 import { ROUTES } from "../../constants/routes";
+import { Content } from "../../types/home";
 
-export default function HomeCTA() {
+export default function HomeCTA({data}: { data: Content[] | null}) {
+
+  const content: Content[] = data?.filter((content) => content.page === "Home") || [];
     return (
       <div className="">
         <div className="mx-auto max-w-7xl  sm:px-6 sm:py-32 lg:px-8 sm:mt-12">
@@ -9,17 +12,12 @@ export default function HomeCTA() {
             
             <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
               <h2 className="text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                Why Nemca Tech?
+                {content[2].title}
               </h2>
               <p className="mt-6 text-pretty text-lg/8 text-gray-300">
-              Nemca Tech offers easy and accessible digital solutions for businesses of all sizes.
-              Our expert team and simple process ensure each solution fits your needs. 
+                {content[2].body} 
               </p>
 
-              <p className="mt-6 text-pretty text-lg/8 text-gray-300">
-              From digital strategies to custom technology, we deliver results that keep you ahead. 
-              With user-friendly tools and expert guidance, Nemca Tech helps you confidently navigate the digital world.
-              </p>
               <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                 <a
                   href={ROUTES.CONTACT}

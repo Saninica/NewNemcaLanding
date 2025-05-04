@@ -1,7 +1,11 @@
 import { COLOR } from "../../constants/colors";
 import { ROUTES } from "../../constants/routes";
+import { Content } from "../../types/home";
 
-export default function HomeFeature() {
+export default function HomeFeature({data}: { data: Content[] | null}) {
+  const content: Content[] = data?.filter((content) => content.page === "Home") || [];
+
+
     return (
       <div className="relative mt-12">
         <div className="relative h-80 overflow-hidden bg-indigo-600 md:absolute md:left-0 md:h-full md:w-1/3 lg:w-1/2 mt-10 ml-2">
@@ -37,10 +41,9 @@ export default function HomeFeature() {
         </div>
         <div className="relative mx-auto max-w-7xl py-24 sm:py-32 lg:px-8 lg:py-40">
           <div className="pl-6 pr-6 md:ml-auto md:w-2/3 md:pl-16 lg:w-1/2 lg:pl-24 lg:pr-0 xl:pl-32">
-            <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">Custom Tech Solutions, Tailored for Success </p>
+            <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl"> {content[1].title} </p>
             <p className="mt-6 text-base/7 text-gray-300">
-                Choose Nemca Tech for custom digital solutions that boost your business with expert guidance and the power of technology, delivering results through experience and innovation.
-
+              {content[1].body}
 
             </p>
             <div className="mt-8">

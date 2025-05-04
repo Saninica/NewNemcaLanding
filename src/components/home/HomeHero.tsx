@@ -1,15 +1,20 @@
 import { ROUTES } from "../../constants/routes";
+import { Content } from "../../types/home";
 
-export default function HomeHero() {
+export default function HomeHero({data}: { data: Content[] | null}) {
+
+  const content: Content[] = data?.filter((content) => content.page === "Home") || [];
+
+
 
     return (
 
         <div className="mx-auto max-w-2xl text-center">
                       <h1 className="text-balance text-5xl font-semibold tracking-tight text-white sm:text-7xl">
-                          Your Vision, Our Innovative Solutions
+                          {content[0].title}
                       </h1>
                       <p className="mt-8 text-pretty text-lg font-medium text-gray-400 sm:text-xl/8">
-                      At Nemca Tech, we turn your ideas into digital solutions. From custom websites and mobile apps to project management, we provide everything you need to succeed. Let’s build your digital roadmap together.
+                          {content[0].body}                     
                       </p>
                       <div className="mt-10 flex items-center justify-center gap-x-6">
                         <a
